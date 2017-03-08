@@ -1,5 +1,5 @@
 $(function() {
-    function ReglagesViewModel(parameters) {
+    function TobecaViewModel(parameters) {
         var self = this;
 
         self.loginState = parameters[0];
@@ -197,10 +197,10 @@ $(function() {
    
 
     }
-
+  
     OCTOPRINT_VIEWMODELS.push([
-        ReglagesViewModel,
+        TobecaViewModel,
         ["loginStateViewModel", "settingsViewModel", "controlViewModel"],
-        "#reglages"
+        ["#tab_plugin_tobecaplugin"]
     ]);
 });
