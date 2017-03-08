@@ -19,6 +19,23 @@ class TobecaPlugin(octoprint.plugin.StartupPlugin,
          js=["js/tobecaplugin.js"]
       )
 
+    def get_update_information(self):
+        return dict(
+            systemcommandeditor=dict(
+                displayName="Tobeca Plugin",
+                displayVersion=self._plugin_version,
+
+                # version check: github repository
+                type="github_release",
+                user="tobeca",
+                repo="OctoPrint-TobecaPlugin",
+                current=self._plugin_version,
+
+                # update method: pip
+                pip="https://github.com/tobeca/OctoPrint-TobecaPlugin/archive/{target_version}.zip"
+            )
+        )
+
       
         
 
@@ -26,4 +43,13 @@ class TobecaPlugin(octoprint.plugin.StartupPlugin,
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
 __plugin_name__ = "Tobeca"
-__plugin_implementation__ = TobecaPlugin()
+
+
+def __plugin_load__():
+    global __plugin_implementation__
+    __plugin_implementation__ = TobecaPlugin()
+
+    global __plugin_hooks__
+    __plugin_hooks__ = {
+        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+    }
